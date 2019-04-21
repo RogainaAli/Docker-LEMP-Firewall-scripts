@@ -1,0 +1,41 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: true
+  tasks:  
+  - name: Apt update
+    apt:
+      update_cache: yes
+  - name: Install packages to allow apt to use a repository over HTTPS
+    apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+    with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python-pip
+  - name: Install Docker-py
+    pip:
+      name: docker-py
+  - name: Add Docker’s official GPG key
+    apt_key:
+     url: https://download.docker.com/linux/ubuntu/gpg
+     state: present
+
+  - name: Add stable repo
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
+      state: present
+      update_cache: yes
+  - name: Install Docker
+    apt:
+     name: docker-ce
+     state: present
+  - name: Install docker-compose
+    apt:
+     name: docker-compose=1.8.*
+     state: present
+     update_cache: yes

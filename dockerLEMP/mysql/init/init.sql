@@ -1,0 +1,3 @@
+CREATE DATABASE Test;
+#GRANT ALL PRIVILEGES ON mydb.* TO 'Test'@'%' IDENTIFIED BY 'Test';
+GRANT ALL PRIVILEGES ON mydb.* TO 'Test'@'localhost' IDENTIFIED BY 'Test';

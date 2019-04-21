@@ -1,0 +1,18 @@
+# I create image on my dockerhub account rbadr for nginx and php which is called  nginx_image
+
+nginx:
+    image: rbadr/nginx_image
+    ports:
+        - "80:80"
+    volumes:
+        - ./php/files:/var/www/html
+mysql:
+  image: mariadb
+  environment:
+    MYSQL_ROOT_PASSWORD: admin
+  ports:
+     - "3306:3306"
+  volumes:
+     - ./mysql/database_files:/var/lib/mysql
+     - ./mysql/init:/docker-entrypoint-initdb.d/:ro
+ 
